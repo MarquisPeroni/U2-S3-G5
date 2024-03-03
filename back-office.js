@@ -71,6 +71,14 @@ function postData() {
         price: price.value
     };
 
+    const storedData = JSON.parse(localStorage.getItem("storedData")) || [];
+    storedData.push({ id: generateId(), ...data });
+    localStorage.setItem("storedData", JSON.stringify(storedData));
+
+    function generateId() {
+        return '_' + Math.random().toString(36).substr(2, 9);
+    }
+
     fetch(url, {
         method: "POST",
         body: JSON.stringify(data),
@@ -147,4 +155,9 @@ function putFetch(id) {
     })
     .catch((err) => console.log(err));
 }
+function getDeletedCardIds() {
+    const deletedCardIds = localStorage.getItem("deletedCardIds");
+    return deletedCardIds ? JSON.parse(deletedCardIds) : [];
+}
+
 
