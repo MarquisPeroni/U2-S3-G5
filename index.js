@@ -109,8 +109,9 @@ fetch(url, {
     
         localStorage.setItem("storedData", JSON.stringify(newData));
     }
-    
-document.getElementById("adminBtn").addEventListener("click", function () {
+
+document.getElementById("adminBtn").addEventListener("click", function (event) {
+    event.preventDefault();
     const deleteButtons = document.querySelectorAll(".btn-delete");
     const modifyButtons = document.querySelectorAll(".btn-modify");
 
