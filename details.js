@@ -2,12 +2,13 @@ const id = new URLSearchParams(window.location.search).get("idProdotto")
 
 const container = document.getElementsByClassName("container")[0];
 
-function create(src, title, description, price) {
+function create(src, title, description, brand, price) {
     container.innerHTML = `
     <img src=${src} alt="">
     <h1>${title}</h1>
     <p>${description}</p>
-    <p>${price}</p>
+    <p>${brand}</p>
+    <p>€ ${price}</p>
     `;
 }
 const apiKey =
@@ -40,6 +41,6 @@ fetch(url, {
     })
     .then((product) => {
         
-        create (product.imageUrl, product.name, product.description, product.price);
+        create (product.imageUrl, product.name, product.description, product.brand, product.price);
     })
     .catch((err) => console.log (err));
