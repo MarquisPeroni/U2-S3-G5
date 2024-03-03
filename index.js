@@ -36,8 +36,14 @@ function createCard(image, title, description, id) {
 
     const btnModify = document.createElement("a");
     btnModify.href = `/back-office.html?idProdotto=${id}`;
-    btnModify.className = "btn btn-success me-1";
+    btnModify.className = "btn btn-success me-1 btn-modify d-none";
     btnModify.innerText = "Modify";
+
+    const btnDelete = document.createElement("button");
+    btnDelete.type = "button";
+    btnDelete.className = "btn btn-danger btn-modify d-none";
+    btnDelete.innerText = "Delete";
+    btnDelete.setAttribute("data-id", id);
 
     row.appendChild(col);
     col.appendChild(card);
@@ -47,6 +53,12 @@ function createCard(image, title, description, id) {
     body.appendChild(p);
     body.appendChild(btnDetail);
     body.appendChild(btnModify);
+    body.appendChild(btnDelete);
+
+    btnDelete.addEventListener("click", function () {
+        const cardId = this.getAttribute("data-id");
+        deleteCardAndData(cardId);
+    });
 }
 
 fetch(url, {
@@ -79,4 +91,34 @@ fetch(url, {
     })
     .catch((err) => console.log(err));
 
+    function deleteCardAndData(cardId) {
+        const cardElement = document.querySelector(`[data-id="${cardId}"]`);
+        if (cardElement) {
+            cardElement.parentNode.parentNode.remove();
     
+            removeDataFromLocalStorage(cardId);
+    
+            alert("Card eliminata con successo");
+        }
+    }
+    
+    function removeDataFromLocalStorage(cardId) {
+        const storedData = JSON.parse(localStorage.getItem("storedData")) || [];
+    
+        const newData = storedData.filter(data => data.id !== cardId);
+    
+        localStorage.setItem("storedData", JSON.stringify(newData));
+    }
+    
+document.getElementById("adminBtn").addEventListener("click", function () {
+    const deleteButtons = document.querySelectorAll(".btn-delete");
+    const modifyButtons = document.querySelectorAll(".btn-modify");
+
+    deleteButtons.forEach((btn) => {
+        btn.classList.toggle("d-none");
+    });
+
+    modifyButtons.forEach((btn) => {
+        btn.classList.toggle("d-none");
+    });
+});
