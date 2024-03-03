@@ -1,286 +1,150 @@
-    // document.addEventListener("DOMContentLoaded", () => {
-    //     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWUxOWMwZjRjNTllYzAwMTk5MGQ2ZjkiLCJpYXQiOjE3MDkyODQzNjcsImV4cCI6MTcxMDQ5Mzk2N30.ATRYa2j1X8KBd3VeOu8dXodcRbT4FtQeboMHnIcLweo";
-    //     const apiEndpoint = "https://striveschool-api.herokuapp.com/api/product/";
-    //     const productForm = document.getElementById("productForm");
-    //     const editProductBtn = document.getElementById("editProductBtn");
-    //     const deleteProductBtn = document.getElementById("deleteProductBtn");
+const apiKey =
+    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWUxZDNhZDRjNTllYzAwMTk5MGQ4ZGYiLCJpYXQiOjE3MDkyOTg2MDUsImV4cCI6MTcxMDUwODIwNX0.mb1tywt7mUK6KjJ7LSC14VY6TgMaADn0jFNfPfzBsKI";
+const url = "https://striveschool-api.herokuapp.com/api/product/";
+const form = document.querySelector("form");
+const btnSubmit = document.getElementsByClassName("btn-primary")[0];
+const title = document.getElementById("Titolo");
+const description = document.getElementById("Descrizione");
+const brand = document.getElementById("brand");
+const imgUrl = document.getElementById("img");
+const price = document.getElementById("prezzo");
 
-    //     let isEditMode = false;
+const id = new URLSearchParams(window.location.search).get("idProdotto"); 
 
-    
-    //     function setEditMode(editMode) {
-    //         isEditMode = editMode;
-    //         editProductBtn.style.display = isEditMode ? "block" : "none";
-    //         deleteProductBtn.style.display = isEditMode ? "block" : "none";
-    //     }
-    
-    //     productForm.addEventListener("submit", async (e) => {
-    //         e.preventDefault();
-    
-    //         const productName = document.getElementById("productName").value;
-    //         const productDescription = document.getElementById('productDescription').value;
-    //         const productBrand = document.getElementById('productBrand').value;
-    //         const productImageUrl = document.getElementById('productImageUrl').value;
-    //         const productPrice = document.getElementById('productPrice').value;
-    //         const productId = document.getElementById('productId').value;
-            
-    
-    //         const newProduct = {
-    //             name: productName,
-    //             description: productDescription,
-    //             brand: productBrand,
-    //             imageUrl: productImageUrl,
-    //             price: parseFloat(productPrice),
-    //         };
-    
-    //         try {
-    //             let response;
-    //             if (productId) {
-    //                 response = await fetch(apiEndpoint + productId, {
-    //                     method: "PUT",
-    //                     headers: {
-    //                         "Content-Type": "application/json",
-    //                         Authorization: `Bearer ${token}`,
-    //                     },
-    //                     body: JSON.stringify(newProduct),
-    //                 });
-    //             } else {
-    //                 response = await fetch(apiEndpoint, {
-    //                     method: "POST",
-    //                     headers: {
-    //                         "Content-Type": "application/json",
-    //                         Authorization: `Bearer ${token}`,
-    //                     },
-    //                     body: JSON.stringify(newProduct),
-    //                 });
-    //             }
-    
-    //             if (response.ok) {
-    //                 console.log("Prodotto salvato con successo!", newProduct);
-    //                 productForm.reset();
-    //                 document.getElementById('productId').value = "";
-    //             } else {
-    //                 console.error("Errore durante l'operazione:", response.statusText);
-    //             }
-    //         } catch (error) {
-    //             console.error("Errore durante l'operazione:", error);
-    //         }
-    //     });
-    
-    //     editProductBtn.addEventListener("click", async () => {
-    //         const productId = document.getElementById("productId").value;
+if(id !== null) {
+    btnSubmit.className = "btn btn-warning";
+    btnSubmit.textContent = "Modify";
 
-    //         console.log("ID del prodotto:", productId);
-    
-            
-    //         if (productId) {
-    //             try {
-    //                 const response = await fetch(apiEndpoint + productId, {
-    //                     method: "PUT", 
-    //                     headers: {
-    //                         "Content-Type": "application/json",
-    //                         Authorization: `Bearer ${token}`,
-    //                     },
-    //                     body: JSON.stringify(newProduct),
-    //                 });
-    
-    //                 if (response.ok) {
-    //                     console.log("Prodotto aggiornato con successo!", newProduct);
-    //                 } else {
-    //                     console.error("Errore durante l'aggiornamento del prodotto:", response.statusText);
-    //                 }
-    //             } catch (error) {
-    //                 console.error("Errore durante l'aggiornamento del prodotto:", error);
-    //             }
-    //         } else {
-    //             console.error("ID del prodotto non valido per l'aggiornamento.");
-    //         }
-    //     });
-
-    //     deleteProductBtn.addEventListener("click", async () => {
-    //         const productId = document.getElementById("productId").value;
-    
-    //         if (productId) {
-    //             try {
-    //                 const response = await fetch(apiEndpoint + productId, {
-    //                     method: "DELETE", 
-    //                     headers: {
-    //                         Authorization: `Bearer ${token}`,
-    //                     },
-    //                 });
-    
-    //                 if (response.ok) {
-    //                     console.log("Prodotto cancellato con successo!");
-    //                     productForm.reset();
-    //                     document.getElementById('productId').value = "";
-    //                 } else {
-    //                     console.error("Errore durante la cancellazione del prodotto:", response.statusText);
-    //                 }
-    //             } catch (error) {
-    //                 console.error("Errore durante la cancellazione del prodotto:", error);
-    //             }
-    //         } else {
-    //             console.error("ID del prodotto non valido per la cancellazione.");
-    //         }
-    //     });
-    //     setEditMode(false);
-    // });
-
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWUxOWMwZjRjNTllYzAwMTk5MGQ2ZjkiLCJpYXQiOjE3MDkyODQzNjcsImV4cCI6MTcxMDQ5Mzk2N30.ATRYa2j1X8KBd3VeOu8dXodcRbT4FtQeboMHnIcLweo";
-        const apiEndpoint = "https://striveschool-api.herokuapp.com/api/product/";
-        const productForm = document.getElementById("productForm");
-        const editProductBtn = document.getElementById("editProductBtn");
-        const deleteProductBtn = document.getElementById("deleteProductBtn");
-    
-        let isEditMode = false;
-    
-        function setEditMode(editMode) {
-            isEditMode = editMode;
-            editProductBtn.style.display = isEditMode ? "block" : "none";
-            deleteProductBtn.style.display = isEditMode ? "block" : "none";
+    fetch(url + id, {
+        method: "GET",
+        headers: {
+            Authorization: apiKey,
+            "Content-Type": "application/json",
+        },
+    })
+    .then((response) => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            if (response.status === 400) {
+                throw new Error ("Error 400 - Client Error");
+            }
+            if (response.status === 404) {
+                throw new Error ("Error 404 - Data not found");
+            }
+            if (response.status === 500) {
+                throw new Error ("Error 500 - Server Error");
+            }
+            throw new Error ("Error Data retrieval");
         }
-    
-        function validateForm() {
-            const productName = document.getElementById("productName").value;
-            const productDescription = document.getElementById('productDescription').value;
-            const productBrand = document.getElementById('productBrand').value;
-            const productImageUrl = document.getElementById('productImageUrl').value;
-            const productPrice = document.getElementById('productPrice').value;
-    
-            if (!productName || !productDescription || !productBrand || !productImageUrl || !productPrice) {
-                alert("Compila tutti i campi obbligatori");
-                return false;
-            }
-    
-            if (isNaN(parseFloat(productPrice)) || parseFloat(productPrice) <= 0) {
-                alert("Il prezzo deve essere un numero positivo");
-                return false;
-            }
-    
-            return true;
-        }
-    
-        productForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-    
-            if (!validateForm()) {
-                return;
-            }
-    
-            const productName = document.getElementById("productName").value;
-            const productDescription = document.getElementById('productDescription').value;
-            const productBrand = document.getElementById('productBrand').value;
-            const productImageUrl = document.getElementById('productImageUrl').value;
-            const productPrice = document.getElementById('productPrice').value;
-            const productId = document.getElementById('productId').value;
-    
-            const newProduct = {
-                name: productName,
-                description: productDescription,
-                brand: productBrand,
-                imageUrl: productImageUrl,
-                price: parseFloat(productPrice),
-            };
-    
-            try {
-                let response;
-                if (productId) {
-                    response = await fetch(apiEndpoint + productId, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`,
-                        },
-                        body: JSON.stringify(newProduct),
-                    });
-                } else {
-                    response = await fetch(apiEndpoint, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`,
-                        },
-                        body: JSON.stringify(newProduct),
-                    });
-                }
-    
-                if (response.ok) {
-                    console.log("Prodotto salvato con successo!", newProduct);
-                    productForm.reset();
-                    document.getElementById('productId').value = "";
-                } else {
-                    console.error("Errore durante l'operazione:", response.statusText);
-                }
-            } catch (error) {
-                console.error("Errore durante l'operazione:", error);
-            }
-        });
-    
-        editProductBtn.addEventListener("click", async () => {
-            const productId = document.getElementById("productId").value;
-    
-            if (!validateForm()) {
-                return;
-            }
-    
-            const newProduct = {
-            };
-    
-            console.log("ID del prodotto:", productId);
-    
-            if (productId) {
-                try {
-                    const response = await fetch(apiEndpoint + productId, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`,
-                        },
-                        body: JSON.stringify(newProduct),
-                    });
-    
-                    if (response.ok) {
-                        console.log("Prodotto aggiornato con successo!", newProduct);
-                        setEditMode(true);
-                    } else {
-                        console.error("Errore durante l'aggiornamento del prodotto:", response.statusText);
-                    }
-                } catch (error) {
-                    console.error("Errore durante l'aggiornamento del prodotto:", error);
-                }
-            } else {
-                console.error("ID del prodotto non valido per l'aggiornamento.");
-            }
-        });
-    
-        deleteProductBtn.addEventListener("click", async () => {
-            const productId = document.getElementById("productId").value;
-    
-            if (productId) {
-                try {
-                    const response = await fetch(apiEndpoint + productId, {
-                        method: "DELETE",
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    });
-    
-                    if (response.ok) {
-                        console.log("Prodotto cancellato con successo!");
-                        productForm.reset();
-                        document.getElementById('productId').value = "";
-                    } else {
-                        console.error("Errore durante la cancellazione del prodotto:", response.statusText);
-                    }
-                } catch (error) {
-                    console.error("Errore durante la cancellazione del prodotto:", error);
-                }
-            } else {
-                console.error("ID del prodotto non valido per la cancellazione.");
-            }
-        });
-    
-        setEditMode(false);
+    })
+    .then((product) => {
+        console.log(product);
+        document.getElementById("Titolo").value = product.name;
+        document.getElementById("Descrizione").value = product.description;
+        document.getElementById("brand").value = product.brand;
+        document.getElementById("img").value = product.imageUrl;
+        document.getElementById("prezzo").value = product.price;
+    })
+    .catch((err) => console.log(err));
+        form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        putFetch(id);
     });
+    btnSubmit.onclick = function () {};
+} else {
+    btnSubmit.className = "btn btn-primary";
+    btnSubmit.textContent = "Submit";
+    form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    postData();
+    });
+}
+
+function postData() {
+
+    const data = {
+        name: title.value,
+        description: description.value,
+        brand: brand.value,
+        imageUrl: imgUrl.value,
+        price: price.value
+    };
+
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            Authorization: apiKey,
+            "Content-Type": "application/json",
+        },
+    })
+    .then((response) => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            if (response.status === 400) {
+                throw new Error ("Error 400 - Client Error");
+            }
+            if (response.status === 404) {
+                throw new Error ("Error 404 - Data not found");
+            }
+            if (response.status === 500) {
+                throw new Error ("Error 500 - Server Error");
+            }
+            throw new Error ("Error Data retrieval");
+        }
+    })
+    .then((newAppointment) => {
+        alert("Prodotto aggiunto con successo")
+        form.reset();
+    })
+    .catch((err) => console.log(err));
+}
+
+function putFetch(id) {
+
+    const data = {
+        name: title.value,
+        description: description.value,
+        brand: brand.value,
+        imageUrl: imgUrl.value,
+        price: price.value
+    };
+
+    fetch(url + id, {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: {
+            Authorization: apiKey,
+            "Content-Type": "application/json",
+        },
+    })
+    .then((response) => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            if (response.status === 400) {
+                throw new Error ("Error 400 - Client Error");
+            }
+            if (response.status === 404) {
+                throw new Error ("Error 404 - Data not found");
+            }
+            if (response.status === 500) {
+                throw new Error ("Error 500 - Server Error");
+            }
+            throw new Error ("Error Data retrieval");
+        }
+    })
+    .then((updatedProduct) => {
+        console.log(updatedProduct);
+        document.getElementById("Titolo").value = updatedProduct.name;
+        document.getElementById("Descrizione").value = updatedProduct.description;
+        document.getElementById("brand").value = updatedProduct.brand;
+        document.getElementById("img").value = updatedProduct.imageUrl;
+        document.getElementById("prezzo").value = updatedProduct.price;
+        alert("L'Annuncio è stato modificato correttamente");
+    })
+    .catch((err) => console.log(err));
+}
+
