@@ -98,7 +98,7 @@ fetch(url, {
     
             removeDataFromLocalStorage(cardId);
     
-            alert("Card eliminata con successo");
+            alert("Card Deleted Successfully");
         }
     }
     

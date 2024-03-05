@@ -40,11 +40,11 @@ if(id !== null) {
     })
     .then((product) => {
         console.log(product);
-        document.getElementById("Titolo").value = product.name;
-        document.getElementById("Descrizione").value = product.description;
+        document.getElementById("title").value = product.name;
+        document.getElementById("description").value = product.description;
         document.getElementById("brand").value = product.brand;
         document.getElementById("img").value = product.imageUrl;
-        document.getElementById("prezzo").value = product.price;
+        document.getElementById("price").value = product.price;
     })
     .catch((err) => console.log(err));
         form.addEventListener("submit", function (event) {
@@ -104,7 +104,7 @@ function postData() {
         }
     })
     .then((newAppointment) => {
-        alert("Prodotto aggiunto con successo")
+        alert("Product Added successfully")
         form.reset();
     })
     .catch((err) => console.log(err));
@@ -146,12 +146,12 @@ function putFetch(id) {
     })
     .then((updatedProduct) => {
         console.log(updatedProduct);
-        document.getElementById("Titolo").value = updatedProduct.name;
-        document.getElementById("Descrizione").value = updatedProduct.description;
+        document.getElementById("title").value = updatedProduct.name;
+        document.getElementById("description").value = updatedProduct.description;
         document.getElementById("brand").value = updatedProduct.brand;
         document.getElementById("img").value = updatedProduct.imageUrl;
-        document.getElementById("prezzo").value = updatedProduct.price;
-        alert("L'Annuncio è stato modificato correttamente");
+        document.getElementById("price").value = updatedProduct.price;
+        alert("Announce modified successfully");
     })
     .catch((err) => console.log(err));
 }
