@@ -12,7 +12,7 @@ function create(src, title, description, brand, price) {
     `;
 }
 const apiKey =
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWUxZDNhZDRjNTllYzAwMTk5MGQ4ZGYiLCJpYXQiOjE3MDkyOTg2MDUsImV4cCI6MTcxMDUwODIwNX0.mb1tywt7mUK6KjJ7LSC14VY6TgMaADn0jFNfPfzBsKI";
+    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWUxOWMwZjRjNTllYzAwMTk5MGQ2ZjkiLCJpYXQiOjE3MDk2NjA0NDAsImV4cCI6MTcxMDg3MDA0MH0.wFDetwDPbXS5nKbA2Sp2pweqgzbVnkJJ1ei_RVH7pko";
 
 const url = "https://striveschool-api.herokuapp.com/api/product/"+id;
 
